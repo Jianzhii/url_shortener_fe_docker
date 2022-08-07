@@ -11,7 +11,7 @@
                 </el-form-item>
                 <el-form-item label="Alias" prop="alias">
                     <el-input v-model="urlShortenerForm.alias" type="text" autocomplete="off">
-                        <template #prepend>http://localhost:8080.com/</template>
+                        <template #prepend>http://localhost:8080/</template>
                     </el-input>
                 </el-form-item>
                 <el-form-item>
