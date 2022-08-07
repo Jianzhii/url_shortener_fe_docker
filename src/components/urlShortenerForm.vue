@@ -15,7 +15,9 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm" @keyup.enter="submitForm" :loading="loading"> Submit </el-button>
+                    <el-button type="primary" @click="submitForm" @keyup.enter="submitForm" :loading="loading" :disabled="disabled">
+                        Submit
+                    </el-button>
                 </el-form-item>
             </el-form>
         </el-main>
@@ -35,9 +37,12 @@ export default {
                 }
             };
             if (!validUrl(value)) {
+                this.disabled = true;
                 cb(new Error(`Please enter a valid URL!`));
+            } else {
+                this.disabled = false;
+                cb();
             }
-            cb();
         };
         return {
             urlShortenerForm: {
@@ -53,6 +58,7 @@ export default {
                 ]
             },
             loading: false,
+            disabled: true,
             redirect: undefined
         };
     },
@@ -61,7 +67,8 @@ export default {
     },
     methods: {
         submitForm() {
-            console.log(this.urlShortenerForm.url);
+            console.log(`url:`, this.urlShortenerForm.url);
+            console.log(`alias:`, this.urlShortenerForm.alias);
             this.loading = true;
         }
     }
