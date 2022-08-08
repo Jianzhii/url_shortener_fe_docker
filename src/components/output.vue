@@ -15,6 +15,14 @@
                                 <div class="cell-item">Shortened URL</div>
                             </template>
                             {{ alias }}
+                            <el-tooltip class="box-item" effect="light" :content="tooltip" placement="right">
+                                <el-button @click="copy" link>
+                                    <el-icon style="vertical-align: middle">
+                                        <DocumentCopy />
+                                    </el-icon>
+                                    <span style="vertical-align: middle"> </span>
+                                </el-button>
+                            </el-tooltip>
                         </el-descriptions-item>
                     </el-descriptions>
                     <br />
@@ -33,13 +41,18 @@ export default {
         return {
             long_url: this.$store.state.url_shortener.long_url,
             alias: this.$store.state.url_shortener.alias,
-            column: 1
+            column: 1,
+            tooltip: "Copy Link:"
         };
     },
     methods: {
         async back() {
             await this.$store.dispatch("url_shortener/resetState");
             this.$router.push(`/`);
+        },
+        copy() {
+            this.tooltip = "Copied!";
+            navigator.clipboard.writeText(this.alias);
         }
     }
 };
@@ -59,5 +72,9 @@ export default {
 h3 {
     text-align: left;
     padding: 0px 0px 0px 60px;
+}
+.icon {
+    pointer-events: all;
+    curser: pointer;
 }
 </style>
