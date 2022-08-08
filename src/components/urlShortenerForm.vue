@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import { shortenUrl } from "../api/url_shortener.js";
+
 export default {
     name: "urlShortenerForm",
     data() {
@@ -66,10 +68,16 @@ export default {
         msg: String
     },
     methods: {
-        submitForm() {
-            console.log(`url:`, this.urlShortenerForm.url);
-            console.log(`alias:`, this.urlShortenerForm.alias);
+        async submitForm() {
             this.loading = true;
+            let req = {
+                long_url: this.urlShortenerForm.url
+            };
+            if (this.urlShortenerForm.alias) {
+                req.alias = this.urlShortenerForm.alias;
+            }
+            const result = await shortenUrl(req);
+            console.log(result);
         }
     }
 };
