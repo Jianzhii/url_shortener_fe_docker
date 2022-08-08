@@ -3,26 +3,16 @@
         <el-main>
             <el-result icon="success" title="Success!" sub-title="Please follow the instructions">
                 <template #extra>
-                    <el-descriptions column="1" size="default" border>
+                    <el-descriptions :column="column" size="default" border>
                         <el-descriptions-item>
                             <template #label>
-                                <div class="cell-item">
-                                    <el-icon :style="iconStyle">
-                                        <user />
-                                    </el-icon>
-                                    Long Url
-                                </div>
+                                <div class="cell-item">Long Url</div>
                             </template>
                             {{ long_url }}
                         </el-descriptions-item>
                         <el-descriptions-item>
                             <template #label>
-                                <div class="cell-item">
-                                    <el-icon :style="iconStyle">
-                                        <tickets />
-                                    </el-icon>
-                                    Shortened URL
-                                </div>
+                                <div class="cell-item">Shortened URL</div>
                             </template>
                             {{ alias }}
                         </el-descriptions-item>
@@ -42,7 +32,8 @@ export default {
     data() {
         return {
             long_url: this.$store.state.url_shortener.long_url,
-            alias: this.$store.state.url_shortener.alias
+            alias: this.$store.state.url_shortener.alias,
+            column: 1
         };
     },
     methods: {
