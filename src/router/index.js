@@ -1,6 +1,12 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const constantRoutes = [
+    
+    { 
+        path: '/:alias', 
+        props: true,
+        component: () => import('@/components/redirect')
+    },
     {
         path: '/',
         props:true,
@@ -11,16 +17,11 @@ const constantRoutes = [
         props: true,
         component: () => import('@/components/output'),
     },
-    { 
-        path: '/:alias', 
-        props: true,
-        component: () => import('@/components/redirect')
-    },
 ]
 
 const createRouterFunction = () =>
     createRouter({
-        history: createWebHashHistory(),
+        history: createWebHistory(),
         routes: constantRoutes,
     })
 
