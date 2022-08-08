@@ -1,68 +1,55 @@
 <template>
     <div class="form-container">
         <el-header>
-            <h1>Come on</h1>
+            <h1 v-if="!error">Redirecting to your URL...</h1>
+            <el-result
+                v-if="error"
+                icon="error"
+                title="Error"
+                sub-title="Unable to find your url.. You will be redirected back to the main page shortly."
+            >
+                <template #extra>
+                    <el-button type="primary" @click="back">Back</el-button>
+                </template>
+            </el-result>
         </el-header>
-        <el-main>
-            <h1>Lets go</h1>
-        </el-main>
     </div>
 </template>
 
 <script>
-import { shortenUrl } from "../api/url_shortener.js";
-
+import { retrieveLongUrl } from "../api/url_shortener.js";
+import { ElLoading } from "element-plus";
 export default {
-    name: "urlShortenerForm",
+    name: "redirectingPage",
     data() {
-        const validateUrl = (rule, value, cb) => {
-            const validUrl = (url) => {
-                try {
-                    return Boolean(new URL(url));
-                } catch (err) {
-                    return false;
-                }
-            };
-            if (!validUrl(value)) {
-                this.disabled = true;
-                cb(new Error(`Please enter a valid URL!`));
-            } else {
-                this.disabled = false;
-                cb();
-            }
-        };
         return {
-            urlShortenerForm: {
-                url: "",
-                alias: ""
-            },
-            urlShortenerRules: {
-                url: [
-                    {
-                        required: true,
-                        validator: validateUrl
-                    }
-                ]
-            },
-            loading: false,
-            disabled: true,
-            redirect: undefined
+            error: false
         };
-    },
-    props: {
-        msg: String
     },
     methods: {
-        async submitForm() {
-            this.loading = true;
-            let req = {
-                long_url: this.urlShortenerForm.url
-            };
-            if (this.urlShortenerForm.alias) {
-                req.alias = this.urlShortenerForm.alias;
-            }
-            const result = await shortenUrl(req);
-            console.log(result);
+        async retrieveLongUrl() {
+            const alias = this.$route.path.slice(1);
+            const res = await retrieveLongUrl(alias);
+            return res.data.long_url;
+        },
+        async back() {
+            await this.$store.dispatch("url_shortener/resetState");
+            this.$router.push(`/`);
+        }
+    },
+    async beforeMount() {
+        const loading = ElLoading.service({ fullscreen: true, text: "Redirecting to your URL..." });
+        try {
+            const longUrl = await this.retrieveLongUrl();
+            window.location.href = longUrl;
+        } catch (err) {
+            loading.close();
+            this.error = true;
+            setTimeout(() => {
+                return this.$router.push({
+                    path: "/"
+                });
+            }, 3000);
         }
     }
 };
