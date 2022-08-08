@@ -36,6 +36,12 @@ const actions = {
                 })
         })
     },
+    resetState({ commit }) {
+        return new Promise((resolve) => {
+            commit('RESET_STATE')
+            resolve()
+        })
+    }
 }
 
 export default {

@@ -1,13 +1,10 @@
 <template>
     <div class="form-container">
-        <el-header>
-            <h1>Welcome to URL shortening service!</h1>
-        </el-header>
         <el-main>
             <el-form ref="formRef" :model="urlShortenerForm" label-width="100px" class="url-shorterningForm" :rules="urlShortenerRules">
                 <h3>Enter your URL to be shortened:</h3>
-                <el-form-item label="URL" prop="url">
-                    <el-input v-model="urlShortenerForm.url" type="text" autocomplete="off" />
+                <el-form-item label="URL" prop="long_url">
+                    <el-input v-model="urlShortenerForm.long_url" type="text" autocomplete="off" />
                 </el-form-item>
                 <el-form-item label="Alias" prop="alias">
                     <el-input v-model="urlShortenerForm.alias" type="text" autocomplete="off">
@@ -25,15 +22,15 @@
 </template>
 
 <script>
-import { shortenUrl } from "../api/url_shortener.js";
+// import { shortenUrl } from "../api/url_shortener.js";
 
 export default {
     name: "urlShortenerForm",
     data() {
         const validateUrl = (rule, value, cb) => {
-            const validUrl = (url) => {
+            const validUrl = (long_url) => {
                 try {
-                    return Boolean(new URL(url));
+                    return Boolean(new URL(long_url));
                 } catch (err) {
                     return false;
                 }
@@ -48,11 +45,11 @@ export default {
         };
         return {
             urlShortenerForm: {
-                url: "",
+                long_url: "",
                 alias: ""
             },
             urlShortenerRules: {
-                url: [
+                long_url: [
                     {
                         required: true,
                         validator: validateUrl
@@ -60,8 +57,7 @@ export default {
                 ]
             },
             loading: false,
-            disabled: true,
-            redirect: undefined
+            disabled: true
         };
     },
     props: {
@@ -69,15 +65,23 @@ export default {
     },
     methods: {
         async submitForm() {
-            this.loading = true;
-            let req = {
-                long_url: this.urlShortenerForm.url
-            };
-            if (this.urlShortenerForm.alias) {
-                req.alias = this.urlShortenerForm.alias;
+            try {
+                this.loading = true;
+                return this.$store
+                    .dispatch("url_shortener/shortenUrl", this.urlShortenerForm)
+                    .then(() => {
+                        this.loading = false;
+                        return this.$router.push({
+                            path: "/result"
+                        });
+                    })
+                    .catch(() => {
+                        this.loading = false;
+                        return false;
+                    });
+            } catch (err) {
+                this.loading = false;
             }
-            const result = await shortenUrl(req);
-            console.log(result);
         }
     }
 };
