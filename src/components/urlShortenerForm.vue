@@ -1,7 +1,7 @@
 <template>
     <div class="form-container">
         <el-header>
-            <h1>{{ msg }}</h1>
+            <h1>Welcome to URL shortening service!</h1>
         </el-header>
         <el-main>
             <el-form ref="formRef" :model="urlShortenerForm" label-width="100px" class="url-shorterningForm" :rules="urlShortenerRules">
@@ -89,5 +89,15 @@ export default {
 }
 .el-input {
     width: 90%;
+}
+
+h3 {
+    text-align: left;
+    padding: 0px 0px 0px 60px;
+}
+
+.el-main {
+    border: 1px solid;
+    border-radius: 50px;
 }
 </style>
