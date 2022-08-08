@@ -1,15 +1,13 @@
 <template>
-    <urlShortenerForm msg="Welcome to  URL Shortening service!" />
+    <el-header>
+        <h1>Welcome to URL shortening service!</h1>
+    </el-header>
+    <router-view />
 </template>
 
 <script>
-import urlShortenerForm from "./components/urlShortenerForm.vue";
-
 export default {
-    name: "App",
-    components: {
-        urlShortenerForm
-    }
+    name: "App"
 };
 </script>
 
