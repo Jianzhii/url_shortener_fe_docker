@@ -3,7 +3,7 @@ import { ElMessage } from 'element-plus'
 
 // create an axios instance
 const service = axios.create({
-    baseURL: process.env.BACKEND_BASE_API || `http://localhost:3000`, // url = base url + request url
+    baseURL: process.env.VUE_APP_BACKEND_BASE_API || `http://localhost:3000`, // url = base url + request url
     timeout: 5000, // request timeout
 })
 
