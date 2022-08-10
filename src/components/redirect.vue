@@ -2,12 +2,7 @@
     <div class="form-container">
         <el-header>
             <h1 v-if="!error">Redirecting to your URL...</h1>
-            <el-result
-                v-if="error"
-                icon="error"
-                title="Error"
-                sub-title="Unable to find your url.. You will be redirected back to the main page shortly."
-            >
+            <el-result v-if="error" icon="error" title="Error" sub-title="You will be redirected back to the main page shortly...">
                 <template #extra>
                     <el-button type="primary" @click="back">Back</el-button>
                 </template>
