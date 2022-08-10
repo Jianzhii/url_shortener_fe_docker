@@ -1,7 +1,7 @@
 <template>
     <div class="output-container">
         <el-main>
-            <el-result icon="success" title="Success!" sub-title="Please follow the instructions">
+            <el-result icon="success" title="Success!" sub-title="You may click on the icon to copy shortened link.">
                 <template #extra>
                     <el-descriptions :column="column" size="default" border>
                         <el-descriptions-item>
