@@ -58,7 +58,7 @@ export default {
             },
             loading: false,
             disabled: true,
-            domainName: process.env.VUE_APP_DOMAIN_NAME
+            domainName: process.env.VUE_APP_DOMAIN_NAME || "http://localhost/"
         };
     },
     props: {
