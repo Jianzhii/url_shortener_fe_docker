@@ -10,7 +10,7 @@
                             </template>
                             {{ long_url }}
                         </el-descriptions-item>
-                        <el-descriptions-item>
+                        <el-descriptions-item ref="shortenedURL">
                             <template #label>
                                 <div class="cell-item">Shortened URL</div>
                             </template>
@@ -52,7 +52,15 @@ export default {
         },
         copy() {
             this.tooltip = "Copied!";
-            navigator.clipboard.writeText(this.alias);
+
+            const tmpTextField = document.createElement("textarea");
+            tmpTextField.textContent = this.alias;
+            tmpTextField.setAttribute("style", "position:absolute; right:200%;");
+            document.body.appendChild(tmpTextField);
+            tmpTextField.select();
+            tmpTextField.setSelectionRange(0, 99999); /*For mobile devices*/
+            document.execCommand("copy");
+            tmpTextField.remove();
         }
     }
 };
