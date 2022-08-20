@@ -51,7 +51,7 @@ VUE_APP_BACKEND_BASE_API=VUE_APP_BACKEND_BASE_API
 Once the image has been pulled or created, it can be started within a docker container with the following command:
 
 ```bash
-$ docker run -d -p 3000:3000 --env-file .env <image_name>
+$ docker run -d -p 80:80 --env-file .env <image_name>
 ```
 
 where the `.env` is the same `.env` used to start the application locally and contain the same variables mentioned in the earlier [section](#env-file) on `.env` and should contain actually values instead of the placeholder values.
