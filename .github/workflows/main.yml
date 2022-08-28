@@ -36,7 +36,7 @@ jobs:
             docker pull ${{ secrets.DOCKER_USERNAME }}/url_shortener_fe:dev
             docker stop url_shortener_fe
             docker rm url_shortener_fe
-            docker run -d -p 80:80 --env-file=fe.env --name=url_shortener_fe ${{ secrets.DOCKER_USERNAME }}/url_shortener_fe:dev
+            docker run -d -p 80:80 --env-file fe.env --name url_shortener_fe ${{ secrets.DOCKER_USERNAME }}/url_shortener_fe:dev
           host: ${{ secrets.REMOTE_HOST }}
           user: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SERVER_SSH_KEY}}
